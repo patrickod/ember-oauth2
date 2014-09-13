@@ -178,12 +178,17 @@ define("ember-oauth2",
                         On reject returns Object with reference to dialog and error.
        */
       openWindow: function(url) {
-        var dialog = window.open(url, 'Authorize', 'height=600, width=450');
+        var windowWidth = 600;
+        var windowHeight = 800;
+        var windowLeft = (window.screen.width/2)-(windowWidth/2);
+        var windowTop = (window.screen.height/2)-(windowHeight/2);
+        var options = 'menubar, width='+windowWidth+', height='+windowHeight+', top='+windowTop+', left='+windowLeft;
+        var dialog = window.open(url, 'Authorize', options);
         if (window.focus && dialog) { dialog.focus(); }
         var self = this;
         return new Ember.RSVP.Promise(function(resolve, reject) {
-          if (dialog) { resolve(dialog); } 
-          else { reject(new Error('Opening dialog login window failed.')); } 
+          if (dialog) { resolve(dialog); }
+          else { reject(new Error('Opening dialog login window failed.')); }
         });
       },
 
@@ -442,7 +447,7 @@ define("ember-oauth2",
      * @method version
      * @static
      */
-    if (Ember.OAuth2) { 
+    if (Ember.OAuth2) {
      Ember.OAuth2.version = VERSION;
     }
   });
